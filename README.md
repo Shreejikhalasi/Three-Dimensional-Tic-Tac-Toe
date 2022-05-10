@@ -1,13 +1,13 @@
 # Three-Dimensional-Tic-Tac-Toe
 
-#Group members:
+# Group members:
 
 Dillion Go 
 
 Shreeji Khalasi
 
 
-#Algorithm Used: 
+# Algorithm Used: 
 
 Using a heuristic that will allow us to find the optimal
 moves for playing 3DTicTacToe. This will allow us to use the A* search algorithm. We

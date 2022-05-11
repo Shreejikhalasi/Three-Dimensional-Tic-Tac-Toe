@@ -70,299 +70,216 @@ class ThreeDimensionalTicTacToe(Game):
         n -= 1  # Because we counted move itself twice
         return n >= self.k
 
-    '''
-    def compute_utility(self, board, move, player):
-        if(self.winsOffMove(board, move, player)):
-            return +1 if player == 'X' else -1
-        else:
-            return 0
+def evaluation_fn(state, game):
+    player = game.to_move(state)
+    board = state.board.copy()
+    if player == 'X':
+        otherPlayer = 'Y'
+    else:
+        otherPlayer = 'X'
 
-    def winsOffMove(self, board, move, player):
-        if move==(0,0,0):
-            if (board.get((0,1,0)) == player) and (board.get((0,2,0))==player):
-                return True
-            if (board.get((1,0,0)) == player) and (board.get((2,0,0)) == player):
-                return True
-            if (board.get((1,1,0)) == player) and (board.get((2,2,0)) == player):
-                return True
-            if (board.get((0,0,1)) == player) and (board.get((0,0,2)) == player):
-                return True
-            if (board.get((1,1,1)) == player) and (board.get((2,2,2)) == player):
-                return True
+    #Horizontal rows flat
+    for dimension in range(1, 4):
+        for row in range(1, 4):
+            numInRow = 0
+            for elem in (1, 4):
+                if board.get(elem, row, dimension) == player:
+                    numInRow+=1
+                if board.get(elem, row, dimension) == otherPlayer:
+                    numInRow=0
+                    break
+            if numInRow == 1:
+                oneInRow+=1
+            if numInRow == 2:
+                twoInRow+=1
+            if numInRow == 3:
+                threeInRow+=1
 
-        elif move==(0,0,1):
-            if (board.get((0,1,1)) == player) and (board.get((0,2,1)) == player):
-                return True
-            if (board.get((1,0,1)) == player) and (board.get((2,0,1)) == player):
-                return True
-            if (board.get((1,1,1)) == player) and (board.get((2,2,1)) == player):
-                return True
-            if (board.get((0,0,0)) == player) and (board.get((0,0,2)) == player):
-                return True
+    #Vertical rows flat
+    for dimension in range(1, 4):
+        for row in range(1, 4):
+            numInRow = 0
+            for elem in (1, 4):
+                if board.get(row, elem, dimension) == player:
+                    numInRow+=1
+                if board.get(row, elem, dimension) == otherPlayer:
+                    numInRow=0
+                    break
+            if numInRow == 1:
+                oneInRow+=1
+            if numInRow == 2:
+                twoInRow+=1
+            if numInRow == 3:
+                threeInRow+=1
+    
+    #\ rows flat
+    for dimension in range(1, 4):
+        numInRow=0
+        for x, y in range(1, 4):
+            if board.get(x, y, dimension) == player:
+                numInRow+=1
+            if board.get(x, y, dimension) == otherPlayer:
+                numInRow=0
+                break
+        if numInRow == 1:
+            oneInRow+=1
+        if numInRow == 2:
+            twoInRow+=1
+        if numInRow == 3:
+            threeInRow+=1
 
-        elif move==(0,0,2):
-            if (board.get((0,1,2)) == player) and (board.get((0,2,2)) == player):
-                return True 
-            if (board.get((1,0,2)) == player) and (board.get((2,0,2)) == player):
-                return True
-            if (board.get((1,1,2)) == player) and (board.get((2,2,2)) == player):
-                return True
-            if (board.get((0,0,0)) == player) and (board.get((0,0,1)) == player):
-                return True 
-            if (board.get((2,2,0)) == player) and (board.get((1,1,1)) == player):
-                return True 
+    #/ rows flat
+    for dimension in range(1, 4):
+        numInRow=0
+        for x, y in range(3, 0, -1):
+            if board.get(x, y, dimension) == player:
+                numInRow+=1
+            if board.get(x, y, dimension) == otherPlayer:
+                numInRow=0
+                break
+        if numInRow == 1:
+            oneInRow+=1
+        if numInRow == 2:
+            twoInRow+=1
+        if numInRow == 3:
+            threeInRow+=1
 
-        elif move==(0,1,0):
-            if (board.get((0,0,0)) == player) and (board.get((0,2,0)) == player):
-                return True
-            if (board.get((1,1,0)) == player) and (board.get((2,1,0)) == player):
-                return True 
-            if (board.get((0,1,1)) == player) and (board.get((0,1,2)) == player):
-                return True 
-                
-        elif move==(0,1,1):
-            if (board.get((0,0,1)) == player) and (board.get((0,2,1)) == player):
-                return True
-            if (board.get((1,1,1)) == player) and (board.get((2,1,1)) == player):
-                return True  
-            if (board.get((0,1,0)) == player) and (board.get((0,1,2)) == player):
-                return True
-                
-        elif move==(0,1,2):
-            if (board.get((0,0,2)) == player) and (board.get((0,2,2)) == player):
-                return True
-            if (board.get((1,1,2)) == player) and (board.get((2,1,2)) == player):
-                return True 
-            if (board.get((0,1,0)) == player) and (board.get((0,1,1)) == player):
-                return True
+    #Z axis
+    for row in range(1, 4):
+        for col in range(1, 4):
+            numInRow=0
+            for dim in range(1, 4):
+                if board.get(row, col, dimension) == player:
+                    numInRow+=1
+                if board.get(row, col, dimension) == otherPlayer:
+                    numInRow=0
+                    break
+            if numInRow == 1:
+                oneInRow+=1
+            if numInRow == 2:
+                twoInRow+=1
+            if numInRow == 3:
+                threeInRow+=1
 
-        elif move==(0,2,0):
-            if (board.get((0,0,0)) == player) and (board.get((0,1,0)) == player):
-                return True
-            if (board.get((1,2,0)) == player) and (board.get((2,2,0)) == player):
-                return True 
-            if (board.get((1,1,0)) == player) and (board.get((2,0,0)) == player):
-                return True 
-            if (board.get((0,2,1)) == player) and (board.get((0,2,2)) == player):
-                return True 
-            if (board.get((1,1,1)) == player) and (board.get((2,0,2)) == player):
-                return True 
-                
-        elif move==(0,2,1):
-            if (board.get((0,0,1)) == player) and (board.get((0,1,1)) == player):
-                return True
-            if (board.get((1,2,1)) == player) and (board.get((2,2,1)) == player):
-                return True 
-            if (board.get((1,1,1)) == player) and (board.get((2,0,1)) == player):
-                return True 
-            if (board.get((0,2,0)) == player) and (board.get((0,2,2)) == player):
-                return True  
+    #Side diagonal 
+    for row in (1, 4):
+        numInRow=0
+        for col, dim in (1, 4):
+            if board.get(row, col, dim) == player:
+                numInRow+=1
+            if board.get(row, col, dim) == otherPlayer:
+                numInRow=0
+                break
+        if numInRow == 1:
+            oneInRow+=1
+        if numInRow == 2:
+            twoInRow+=1
+        if numInRow == 3:
+            threeInRow+=1
 
-        elif move==(0,2,2):
-            if (board.get((0,0,2)) == player) and (board.get((0,1,2)) == player):
-                return True
-            if (board.get((1,2,2)) == player) and (board.get((2,2,2)) == player):
-                return True
-            if (board.get((1,1,2)) == player) and (board.get((2,0,2)) == player):
-                return True 
-            if (board.get((0,2,0)) == player) and (board.get((0,2,1)) == player):
-                return True 
-            if (board.get((2,0,0)) == player) and (board.get((1,1,1)) == player):
-                return True 
+    #Side diagonal
+    for row in (1, 4):
+        numInRow=0
+        dim=1
+        for col in (3, 0, -1):
+            if board.get(row, col, dim) == player:
+                numInRow+=1
+            if board.get(row, col, dim) == otherPlayer:
+                numInRow=0
+                break
+            dim+=1
+        if numInRow == 1:
+            oneInRow+=1
+        if numInRow == 2:
+            twoInRow+=1
+        if numInRow == 3:
+            threeInRow+=1
 
-        elif move==(1,0,0):
-            if (board.get((1,1,0)) == player) and (board.get((1,2,0)) == player):
-                return True
-            if (board.get((0,0,0)) == player) and (board.get((2,0,0)) == player):
-                return True 
-            if (board.get((1,0,1)) == player) and (board.get((1,0,2)) == player):
-                return True 
+    #3d diagonal 1
+    numInRow=0
+    for rcd in (1, 4):
+        if board.get(rcd, rcd, rcd) == player:
+            numInRow+=1
+        if board.get(rcd, rcd, rcd) == otherPlayer:
+            numInRow=0
+            break
+    if numInRow == 1:
+        oneInRow+=1
+    if numInRow == 2:
+        twoInRow+=1
+    if numInRow == 3:
+        threeInRow+=1
 
-        elif move==(1,0,1):
-            if (board.get((1,1,1)) == player) and (board.get((1,2,1)) == player):
-                return True
-            if (board.get((0,0,1)) == player) and (board.get((2,0,1)) == player):
-                return True 
-            if (board.get((1,0,0)) == player) and (board.get((1,0,2)) == player):
-                return True 
-            if (board.get((1,1,0)) == player) and (board.get((1,0,2)) == player):
-                return True
-            if (board.get((1,2,0)) == player) and (board.get((1,0,2)) == player):
-                return True
+    #3d diagonal 2
+    numInRow=0
+    dim=1
+    for rcd in (3, 0, -1):
+        if board.get(rcd, rcd, dim) == player:
+            numInRow+=1
+        if board.get(rcd, rcd, dim) == otherPlayer:
+            numInRow=0
+            break
+        dim+=1
+    if numInRow == 1:
+        oneInRow+=1
+    if numInRow == 2:
+        twoInRow+=1
+    if numInRow == 3:
+        threeInRow+=1
 
-        elif move==(1,0,2):
-            if (board.get((1,1,2)) == player) and (board.get((1,2,2)) == player):
-                return True
-            if (board.get((0,0,2)) == player) and (board.get((2,0,2)) == player):
-                return True 
-            if (board.get((1,0,0)) == player) and (board.get((1,0,1)) == player):
-                return True 
-            if (board.get((1,1,0)) == player) and (board.get((1,0,1)) == player):
-                return True
-            if (board.get((1,2,0)) == player) and (board.get((1,0,1)) == player):
-                return True
-        
-        elif move==(1,1,0):
-            if (board.get((1,0,0)) == player) and (board.get((1,2,0)) == player):
-                return True
-            if (board.get((0,1,0)) == player) and (board.get((2,1,0)) == player):
-                return True
-            if (board.get((0,0,0)) == player) and (board.get((2,2,0)) == player):
-                return True
-            if (board.get((0,2,0)) == player) and (board.get((2,0,0)) == player):
-                return True
-            if (board.get((1,0,1)) == player) and (board.get((1,0,2)) == player):
-                return True
+    #3d diagonal 3
+    numInRow=0
+    dim=1
+    row=1
+    col=3
+    for count in (1, 4):
+        if board.get(row, col, dim) == player:
+            numInRow+=1
+        if board.get(row, col, dim) == otherPlayer:
+            numInRow=0
+            break
+        dim+=1
+        row+=1
+        col-=1
+    if numInRow == 1:
+        oneInRow+=1
+    if numInRow == 2:
+        twoInRow+=1
+    if numInRow == 3:
+        threeInRow+=1
 
-        elif move==(1,1,1):
-            if (board.get((1,0,1)) == player) and (board.get((1,2,1)) == player):
-                return True
-            if (board.get((0,1,1)) == player) and (board.get((2,1,1)) == player):
-                return True
-            if (board.get((0,0,1)) == player) and (board.get((2,2,1)) == player):
-                return True
-            if (board.get((0,2,1)) == player) and (board.get((2,0,1)) == player):
-                return True
-            if (board.get((0,0,0)) == player) and (board.get((2,2,2)) == player):
-                return True
-            if (board.get((2,0,0)) == player) and (board.get((0,2,2)) == player):
-                return True
-            if (board.get((0,2,0)) == player) and (board.get((2,0,2)) == player):
-                return True
-            if (board.get((2,2,0)) == player) and (board.get((0,0,2)) == player):
-                return True
+    #3d diagonal 3
+    numInRow=0
+    dim=3
+    row=1
+    col=3
+    for count in (1, 4):
+        if board.get(row, col, dim) == player:
+            numInRow+=1
+        if board.get(row, col, dim) == otherPlayer:
+            numInRow=0
+            break
+        dim-=1
+        row+=1
+        col-=1
+    if numInRow == 1:
+        oneInRow+=1
+    if numInRow == 2:
+        twoInRow+=1
+    if numInRow == 3:
+        threeInRow+=1
 
-        elif move==(1,1,2):
-            if (board.get((1,0,2)) == player) and (board.get((1,2,2))==player):
-                return True
-            if (board.get((0,1,2)) == player) and (board.get((2,1,2))==player):
-                return True
-            if (board.get((0,0,2)) == player) and (board.get((2,2,2)) == player):
-                return True
-            if (board.get((0,2,2)) == player) and (board.get((2,0,2)) == player):
-                return True
-        
-        elif move==(1,2,0):
-            if (board.get((1,0,0)) == player) and (board.get((1,1,0))==player):
-                return True
-            if (board.get((0,2,0)) == player) and (board.get((2,2,0))==player):
-                return True
-            if (board.get((1,0,1)) == player) and (board.get((1,0,2))==player):
-                return True
-            
-            
-        elif move==(1,2,1):
-            if (board.get((1,0,1)) == player) and (board.get((1,1,1))==player):
-                return True
-            if (board.get((0,2,1)) == player) and (board.get((2,2,1))==player):
-                return True
-            
-            
-        elif move==(1,2,2):
-            if (board.get((1,0,2)) == player) and (board.get((1,1,2))==player):
-                return True
-            if (board.get((0,2,2)) == player) and (board.get((2,2,2))==player):
-                return True
-        
-        elif move==(2,0,0):
-            if (board.get((2,1,0)) == player) and (board.get((2,2,0))==player):
-                return True
-            if (board.get((0,0,0)) == player) and (board.get((1,0,0))==player):
-                return True
-            if (board.get((0,2,0)) == player) and (board.get((1,1,0))==player):
-                return True
-            if (board.get((2,0,1)) == player) and (board.get((2,0,2))==player):
-                return True
-            if (board.get((1,1,1)) == player) and (board.get((0,2,2))==player):
-                return True
-           
-        elif move==(2,0,1):
-            if (board.get((2,1,1)) == player) and (board.get((2,2,1))==player):
-                return True
-            if (board.get((0,0,1)) == player) and (board.get((1,0,1))==player):
-                return True
-            if (board.get((0,2,1)) == player) and (board.get((1,1,1))==player):
-                return True
-            if (board.get((2,0,0)) == player) and (board.get((2,0,2))==player):
-                return True
-            if (board.get((2,1,0)) == player) and (board.get((2,0,2))==player):
-                return True
-            if (board.get((2,2,0)) == player) and (board.get((2,0,2))==player):
-                return True
-            
-          
-        elif move==(2,0,2):
-            if (board.get((2,1,2)) == player) and (board.get((2,2,2))==player):
-                return True
-            if (board.get((0,0,2)) == player) and (board.get((1,0,2))==player):
-                return True
-            if (board.get((0,2,2)) == player) and (board.get((1,1,2))==player):
-                return True
-            if (board.get((2,0,0)) == player) and (board.get((2,0,1))==player):
-                return True
-            if (board.get((2,1,0)) == player) and (board.get((2,0,1))==player):
-                return True
-            if (board.get((2,2,0)) == player) and (board.get((2,0,1))==player):
-                return True
-            if (board.get((0,2,0)) == player) and (board.get((1,1,1))==player):
-                return True
-            
-        elif move==(2,1,0):
-            if (board.get((2,0,0)) == player) and (board.get((2,2,0))==player):
-                return True
-            if (board.get((0,1,0)) == player) and (board.get((1,1,0))==player):
-                return True
-            if (board.get((2,0,1)) == player) and (board.get((2,0,2))==player):
-                return True
-            
-        elif move==(2,1,1):
-            if (board.get((2,0,1)) == player) and (board.get((2,2,1))==player):
-                return True
-            if (board.get((0,1,1)) == player) and (board.get((1,1,1))==player):
-                return True
-           
-        elif move==(2,1,2):
-            if (board.get((2,0,2)) == player) and (board.get((2,2,2))==player):
-                return True
-            if (board.get((0,1,2)) == player) and (board.get((1,1,2))==player):
-                return True
+    oneInRow=0
+    twoInRow=0
+    threeInRow=0
+    finalUtility=((43**2)*threeInRow)+(43*twoInRow)+oneInRow
+    return finalUtility
 
-        elif move==(2,2,0):
-            if (board.get((2,0,0)) == player) and (board.get((2,1,0))==player):
-                return True
-            if (board.get((0,2,0)) == player) and (board.get((1,2,0))==player):
-                return True
-            if (board.get((0,0,0)) == player) and (board.get((1,1,0))==player):
-                return True
-            if (board.get((2,0,1)) == player) and (board.get((2,0,2))==player):
-                return True
-            if (board.get((1,1,1)) == player) and (board.get((0,0,2))==player):
-                return True
-           
-        elif move==(2,2,1):
-            if (board.get((2,0,1)) == player) and (board.get((2,1,1))==player):
-                return True
-            if (board.get((0,2,1)) == player) and (board.get((1,2,1))==player):
-                return True
-            if (board.get((0,0,1)) == player) and (board.get((1,1,1))==player):
-                return True
-            
-        elif move==(2,2,2):
-            if (board.get((2,0,2)) == player) and (board.get((2,1,2))==player):
-                return True
-            if (board.get((0,2,2)) == player) and (board.get((1,2,2))==player):
-                return True
-            if (board.get((0,0,2)) == player) and (board.get((1,1,2))==player):
-                return True
-            if (board.get((0,0,0)) == player) and (board.get((1,1,1))==player):
-                return True
 
-        else:
-            return False
-    '''
 
 def alpha_beta_cutoff_player(game, state):
-    return alpha_beta_cutoff_search(state, game, d=4, cutoff_test=None, eval_fn=None)
+    return alpha_beta_cutoff_search(state, game, d=4, cutoff_test=None, eval_fn=evaluation_fn)
+
        
 
 

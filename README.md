@@ -2,7 +2,7 @@
 
 # Group members:
 
-Dillion Go 
+Dillon Go 
 
 Shreeji Khalasi
 

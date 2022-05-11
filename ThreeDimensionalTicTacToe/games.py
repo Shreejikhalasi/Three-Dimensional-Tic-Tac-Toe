@@ -1,5 +1,3 @@
-"""Games or Adversarial Search (Chapter 5)"""
-
 import copy
 import itertools
 import random
@@ -253,8 +251,6 @@ class Game:
     def play_game(self, *players):
         """Play an n-person, move-alternating game."""
         state = self.initial
-        print(self)
-        print(state)
         while True:
             for player in players:
                 move = player(self, state)
@@ -262,7 +258,6 @@ class Game:
                 if self.terminal_test(state):
                     self.display(state)
                     return self.utility(state, self.to_move(self.initial))
-                
 
 
 class StochasticGame(Game):
@@ -397,7 +392,6 @@ class TicTacToe(Game):
 
     def compute_utility(self, board, move, player):
         """If 'X' wins with this move, return 1; if 'O' wins return -1; else return 0."""
-        
         if (self.k_in_row(board, move, player, (0, 1)) or
                 self.k_in_row(board, move, player, (1, 0)) or
                 self.k_in_row(board, move, player, (1, -1)) or
@@ -420,8 +414,6 @@ class TicTacToe(Game):
             x, y = x - delta_x, y - delta_y
         n -= 1  # Because we counted move itself twice
         return n >= self.k
-
-    
 
 
 class ConnectFour(TicTacToe):

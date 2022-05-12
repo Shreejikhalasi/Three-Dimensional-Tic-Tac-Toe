@@ -70,9 +70,12 @@ class ThreeDimensionalTicTacToe(Game):
         n -= 1  # Because we counted move itself twice
         return n >= self.k
 
-def evaluation_fn(state, game):
-    player = game.to_move(state)
+def evaluation_fn(state):
+    player = state.to_move
     board = state.board.copy()
+    oneInRow=0
+    twoInRow=0
+    threeInRow=0
     if player == 'X':
         otherPlayer = 'Y'
     else:
@@ -83,9 +86,9 @@ def evaluation_fn(state, game):
         for row in range(1, 4):
             numInRow = 0
             for elem in (1, 4):
-                if board.get(elem, row, dimension) == player:
+                if board.get((elem, row, dimension)) == player:
                     numInRow+=1
-                if board.get(elem, row, dimension) == otherPlayer:
+                if board.get((elem, row, dimension)) == otherPlayer:
                     numInRow=0
                     break
             if numInRow == 1:
@@ -100,9 +103,9 @@ def evaluation_fn(state, game):
         for row in range(1, 4):
             numInRow = 0
             for elem in (1, 4):
-                if board.get(row, elem, dimension) == player:
+                if board.get((row, elem, dimension)) == player:
                     numInRow+=1
-                if board.get(row, elem, dimension) == otherPlayer:
+                if board.get((row, elem, dimension)) == otherPlayer:
                     numInRow=0
                     break
             if numInRow == 1:
@@ -115,10 +118,10 @@ def evaluation_fn(state, game):
     #\ rows flat
     for dimension in range(1, 4):
         numInRow=0
-        for x, y in range(1, 4):
-            if board.get(x, y, dimension) == player:
+        for x in range(1, 4):
+            if board.get((x, x, dimension)) == player:
                 numInRow+=1
-            if board.get(x, y, dimension) == otherPlayer:
+            if board.get((x, x, dimension)) == otherPlayer:
                 numInRow=0
                 break
         if numInRow == 1:
@@ -131,10 +134,10 @@ def evaluation_fn(state, game):
     #/ rows flat
     for dimension in range(1, 4):
         numInRow=0
-        for x, y in range(3, 0, -1):
-            if board.get(x, y, dimension) == player:
+        for x in range(3, 0, -1):
+            if board.get((x, x, dimension)) == player:
                 numInRow+=1
-            if board.get(x, y, dimension) == otherPlayer:
+            if board.get((x, x, dimension)) == otherPlayer:
                 numInRow=0
                 break
         if numInRow == 1:
@@ -149,9 +152,9 @@ def evaluation_fn(state, game):
         for col in range(1, 4):
             numInRow=0
             for dim in range(1, 4):
-                if board.get(row, col, dimension) == player:
+                if board.get((row, col, dimension)) == player:
                     numInRow+=1
-                if board.get(row, col, dimension) == otherPlayer:
+                if board.get((row, col, dimension)) == otherPlayer:
                     numInRow=0
                     break
             if numInRow == 1:
@@ -164,10 +167,10 @@ def evaluation_fn(state, game):
     #Side diagonal 
     for row in (1, 4):
         numInRow=0
-        for col, dim in (1, 4):
-            if board.get(row, col, dim) == player:
+        for col in (1, 4):
+            if board.get((row, col, col)) == player:
                 numInRow+=1
-            if board.get(row, col, dim) == otherPlayer:
+            if board.get((row, col, col)) == otherPlayer:
                 numInRow=0
                 break
         if numInRow == 1:
@@ -182,9 +185,9 @@ def evaluation_fn(state, game):
         numInRow=0
         dim=1
         for col in (3, 0, -1):
-            if board.get(row, col, dim) == player:
+            if board.get((row, col, dim)) == player:
                 numInRow+=1
-            if board.get(row, col, dim) == otherPlayer:
+            if board.get((row, col, dim)) == otherPlayer:
                 numInRow=0
                 break
             dim+=1
@@ -198,9 +201,9 @@ def evaluation_fn(state, game):
     #3d diagonal 1
     numInRow=0
     for rcd in (1, 4):
-        if board.get(rcd, rcd, rcd) == player:
+        if board.get((rcd, rcd, rcd)) == player:
             numInRow+=1
-        if board.get(rcd, rcd, rcd) == otherPlayer:
+        if board.get((rcd, rcd, rcd)) == otherPlayer:
             numInRow=0
             break
     if numInRow == 1:
@@ -214,9 +217,9 @@ def evaluation_fn(state, game):
     numInRow=0
     dim=1
     for rcd in (3, 0, -1):
-        if board.get(rcd, rcd, dim) == player:
+        if board.get((rcd, rcd, dim)) == player:
             numInRow+=1
-        if board.get(rcd, rcd, dim) == otherPlayer:
+        if board.get((rcd, rcd, dim)) == otherPlayer:
             numInRow=0
             break
         dim+=1
@@ -233,9 +236,9 @@ def evaluation_fn(state, game):
     row=1
     col=3
     for count in (1, 4):
-        if board.get(row, col, dim) == player:
+        if board.get((row, col, dim)) == player:
             numInRow+=1
-        if board.get(row, col, dim) == otherPlayer:
+        if board.get((row, col, dim)) == otherPlayer:
             numInRow=0
             break
         dim+=1
@@ -254,9 +257,9 @@ def evaluation_fn(state, game):
     row=1
     col=3
     for count in (1, 4):
-        if board.get(row, col, dim) == player:
+        if board.get((row, col, dim)) == player:
             numInRow+=1
-        if board.get(row, col, dim) == otherPlayer:
+        if board.get((row, col, dim)) == otherPlayer:
             numInRow=0
             break
         dim-=1
@@ -269,9 +272,6 @@ def evaluation_fn(state, game):
     if numInRow == 3:
         threeInRow+=1
 
-    oneInRow=0
-    twoInRow=0
-    threeInRow=0
     finalUtility=((43**2)*threeInRow)+(43*twoInRow)+oneInRow
     return finalUtility
 

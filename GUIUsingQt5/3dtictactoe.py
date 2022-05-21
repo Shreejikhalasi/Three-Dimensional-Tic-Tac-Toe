@@ -1,6 +1,5 @@
 from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QLabel
 from PyQt5 import uic
-#from ThreeDimnsionalTicTacToe import *
 import sys
 
 class UI(QMainWindow):
@@ -188,6 +187,55 @@ class UI(QMainWindow):
 
 		if self.button9.text() != "" and self.button9.text() == self.button18.text() and self.button9.text() == self.button27.text():
 			self.win(self.button9, self.button18, self.button27)
+   
+		#3d Dig	
+		
+		if self.button1.text() != "" and self.button1.text() == self.button14.text() and self.button1.text() == self.button27.text():
+			self.win(self.button1, self.button14, self.button27)
+
+		if self.button3.text() != "" and self.button3.text() == self.button14.text() and self.button3.text() == self.button25.text():
+			self.win(self.button3, self.button14, self.button25)
+
+		if self.button7.text() != "" and self.button7.text() == self.button14.text() and self.button7.text() == self.button21.text():
+			self.win(self.button7, self.button14, self.button21)
+
+		if self.button9.text() != "" and self.button9.text() == self.button14.text() and self.button9.text() == self.button19.text():
+			self.win(self.button9, self.button14, self.button19)
+		if self.button1.text() != "" and self.button1.text() == self.button11.text() and self.button1.text() == self.button21.text():
+			self.win(self.button1, self.button11, self.button21)
+
+		if self.button3.text() != "" and self.button3.text() == self.button11.text() and self.button3.text() == self.button19.text():
+			self.win(self.button3, self.button11, self.button19)
+
+		if self.button4.text() != "" and self.button4.text() == self.button14.text() and self.button4.text() == self.button24.text():
+			self.win(self.button4, self.button14, self.button24)
+
+		if self.button6.text() != "" and self.button6.text() == self.button14.text() and self.button6.text() == self.button22.text():
+			self.win(self.button6, self.button14, self.button22)
+   
+		if self.button7.text() != "" and self.button7.text() == self.button17.text() and self.button1.text() == self.button27.text():
+			self.win(self.button7, self.button17, self.button27)
+
+		if self.button9.text() != "" and self.button9.text() == self.button17.text() and self.button9.text() == self.button25.text():
+			self.win(self.button9, self.button17, self.button25)
+
+		if self.button1.text() != "" and self.button1.text() == self.button13.text() and self.button1.text() == self.button25.text():
+			self.win(self.button1, self.button13, self.button25)
+
+		if self.button7.text() != "" and self.button7.text() == self.button13.text() and self.button7.text() == self.button19.text():
+			self.win(self.button7, self.button13, self.button19)
+   
+		if self.button8.text() != "" and self.button8.text() == self.button14.text() and self.button8.text() == self.button20.text():
+			self.win(self.button8, self.button14, self.button20)
+
+		if self.button9.text() != "" and self.button9.text() == self.button15.text() and self.button9.text() == self.button21.text():
+			self.win(self.button9, self.button15, self.button21)
+
+		if self.button3.text() != "" and self.button3.text() == self.button15.text() and self.button3.text() == self.button27.text():
+			self.win(self.button3, self.button15, self.button27)
+
+		if self.button2.text() != "" and self.button2.text() == self.button14.text() and self.button2.text() == self.button26.text():
+			self.win(self.button2, self.button14, self.button26)
 
 
 	def win(self, a,b,c):
@@ -198,7 +246,41 @@ class UI(QMainWindow):
 
 		# Add Winner Label
 		self.label.setText(f"{a.text()} Wins!")
+		self.desiable()
   
+	def desiable(self):
+		button_list = [
+		self.button1,
+		self.button2,
+		self.button3,
+		self.button4,
+		self.button5,
+		self.button6,
+		self.button7,
+		self.button8,
+		self.button9,
+		self.button10,
+		self.button11,
+		self.button12,
+		self.button13,
+		self.button14,
+		self.button15,
+		self.button16,
+		self.button17,
+		self.button18,
+		self.button19,
+		self.button20,
+		self.button21,
+		self.button22,
+		self.button23,
+		self.button24,
+		self.button25,
+		self.button26,
+		self.button27,]
+  
+		for b in button_list:
+			b.setEnabled(False)
+      
   
 	# Click The Buttons
 	def clicker(self, b):

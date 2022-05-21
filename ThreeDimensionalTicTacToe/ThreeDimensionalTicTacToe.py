@@ -283,15 +283,9 @@ def evaluation_fn(state):
         return finalUtility
     else: 
         return 1000000
-    
-
-
 
 def alpha_beta_cutoff_player(game, state):
     return alpha_beta_cutoff_search(state, game, d=2, cutoff_test=None, eval_fn=evaluation_fn)
-
-       
-
 
 if __name__ == "__main__":
     
@@ -302,16 +296,6 @@ if __name__ == "__main__":
         print("MIN won the game")
     else:
         print("MAX won the game")
-    '''
-    tt = TicTacToe()
-    print(tt.initial)
-    utility = tt.play_game(alpha_beta_player, query_player) # computer moves first 
-    if (utility < 0):
-        print("MIN won the game")
-    else:
-        print("MAX won the game")
-    '''
-    
     
         
    

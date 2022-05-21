@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton, QLabel
 from PyQt5 import uic
+#from ThreeDimnsionalTicTacToe import *
 import sys
 
 class UI(QMainWindow):
@@ -77,6 +78,128 @@ class UI(QMainWindow):
 		# Show The App
 		self.show()
 
+	def checkWin(self):
+    		# boad 1 Across
+		if self.button1.text() != "" and self.button1.text() == self.button4.text() and self.button1.text() == self.button7.text():
+			self.win(self.button1, self.button4, self.button7)
+
+		if self.button2.text() != "" and self.button2.text() == self.button5.text() and self.button2.text() == self.button8.text():
+			self.win(self.button2, self.button5, self.button8)
+
+		if self.button3.text() != "" and self.button3.text() == self.button6.text() and self.button3.text() == self.button9.text():
+			self.win(self.button3, self.button6, self.button9)
+
+		# boad 1 Down
+		if self.button1.text() != "" and self.button1.text() == self.button2.text() and self.button1.text() == self.button3.text():
+			self.win(self.button1, self.button2, self.button3)
+
+		if self.button4.text() != "" and self.button4.text() == self.button5.text() and self.button4.text() == self.button6.text():
+			self.win(self.button4, self.button5, self.button6)
+
+		if self.button7.text() != "" and self.button7.text() == self.button8.text() and self.button7.text() == self.button9.text():
+			self.win(self.button7, self.button8, self.button9)
+
+		# boad 1 Diagonal
+		if self.button1.text() != "" and self.button1.text() == self.button5.text() and self.button1.text() == self.button9.text():
+			self.win(self.button1, self.button5, self.button9)
+
+		if self.button3.text() != "" and self.button3.text() == self.button5.text() and self.button3.text() == self.button7.text():
+			self.win(self.button3, self.button5, self.button7)
+  
+		# boad 2 Across
+		if self.button10.text() != "" and self.button10.text() == self.button13.text() and self.button10.text() == self.button16.text():
+			self.win(self.button10, self.button13, self.button16)
+
+		if self.button11.text() != "" and self.button11.text() == self.button14.text() and self.button11.text() == self.button17.text():
+			self.win(self.button11, self.button14, self.button17)
+
+		if self.button12.text() != "" and self.button12.text() == self.button15.text() and self.button12.text() == self.button18.text():
+			self.win(self.button12, self.button15, self.button18)
+
+		# boad 2 Down
+		if self.button10.text() != "" and self.button10.text() == self.button11.text() and self.button10.text() == self.button12.text():
+			self.win(self.button10, self.button11, self.button12)
+
+		if self.button13.text() != "" and self.button13.text() == self.button14.text() and self.button13.text() == self.button15.text():
+			self.win(self.button13, self.button14, self.button15)
+
+		if self.button16.text() != "" and self.button16.text() == self.button17.text() and self.button16.text() == self.button18.text():
+			self.win(self.button16, self.button17, self.button18)
+
+		# boad 2 Diagonal
+		if self.button10.text() != "" and self.button10.text() == self.button14.text() and self.button10.text() == self.button18.text():
+			self.win(self.button10, self.button14, self.button18)
+
+		if self.button12.text() != "" and self.button12.text() == self.button14.text() and self.button12.text() == self.button16.text():
+			self.win(self.button12, self.button14, self.button16)
+
+		# boad 3 Across
+		if self.button19.text() != "" and self.button19.text() == self.button22.text() and self.button19.text() == self.button25.text():
+			self.win(self.button19, self.button22, self.button25)
+
+		if self.button20.text() != "" and self.button20.text() == self.button23.text() and self.button20.text() == self.button26.text():
+			self.win(self.button20, self.button23, self.button26)
+
+		if self.button21.text() != "" and self.button21.text() == self.button24.text() and self.button21.text() == self.button27.text():
+			self.win(self.button21, self.button24, self.button27)
+
+		# boad 3 Down
+		if self.button19.text() != "" and self.button19.text() == self.button20.text() and self.button19.text() == self.button21.text():
+			self.win(self.button19, self.button20, self.button21)
+
+		if self.button22.text() != "" and self.button22.text() == self.button23.text() and self.button22.text() == self.button24.text():
+			self.win(self.button22, self.button23, self.button24)
+		
+		if self.button25.text() != "" and self.button25.text() == self.button26.text() and self.button25.text() == self.button27.text():
+			self.win(self.button25, self.button26, self.button27)
+
+		# boad 3 Diagonal
+		if self.button19.text() != "" and self.button19.text() == self.button23.text() and self.button19.text() == self.button27.text():
+			self.win(self.button19, self.button23, self.button27)
+
+		if self.button21.text() != "" and self.button21.text() == self.button23.text() and self.button21.text() == self.button25.text():
+			self.win(self.button21, self.button23, self.button25)
+		
+
+		# 3d boad Across
+		if self.button1.text() != "" and self.button1.text() == self.button10.text() and self.button1.text() == self.button19.text():
+			self.win(self.button1, self.button10, self.button19)
+
+		if self.button2.text() != "" and self.button2.text() == self.button11.text() and self.button2.text() == self.button20.text():
+			self.win(self.button2, self.button11, self.button20)
+
+		if self.button3.text() != "" and self.button3.text() == self.button12.text() and self.button3.text() == self.button21.text():
+			self.win(self.button3, self.button12, self.button21)
+
+		if self.button4.text() != "" and self.button4.text() == self.button13.text() and self.button4.text() == self.button22.text():
+			self.win(self.button4, self.button13, self.button22)
+
+		if self.button5.text() != "" and self.button5.text() == self.button14.text() and self.button5.text() == self.button23.text():
+			self.win(self.button5, self.button14, self.button23)
+
+		if self.button6.text() != "" and self.button6.text() == self.button15.text() and self.button6.text() == self.button24.text():
+			self.win(self.button6, self.button15, self.button24)
+
+		if self.button7.text() != "" and self.button7.text() == self.button16.text() and self.button7.text() == self.button25.text():
+			self.win(self.button7, self.button16, self.button25)
+
+		if self.button8.text() != "" and self.button8.text() == self.button17.text() and self.button8.text() == self.button26.text():
+			self.win(self.button8, self.button17, self.button26)
+
+		if self.button9.text() != "" and self.button9.text() == self.button18.text() and self.button9.text() == self.button27.text():
+			self.win(self.button9, self.button18, self.button27)
+
+
+	def win(self, a,b,c):
+		# Change the button colors to red
+		a.setStyleSheet('QPushButton {color: red;}')
+		b.setStyleSheet('QPushButton {color: red;}')
+		c.setStyleSheet('QPushButton {color: red;}')
+
+		# Add Winner Label
+		self.label.setText(f"{a.text()} Wins!")
+  
+  
 	# Click The Buttons
 	def clicker(self, b):
 		if self.counter % 2 == 0:
@@ -92,7 +215,7 @@ class UI(QMainWindow):
 		# Increment The Counter
 		self.counter += 1
 
-		
+		self.checkWin()
 
 	# Start Over
 	def reset(self):

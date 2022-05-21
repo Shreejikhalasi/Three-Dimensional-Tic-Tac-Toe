@@ -50,8 +50,14 @@ class ThreeDimensionalTicTacToe(Game):
                 self.k_in_row(board, move, player, (1, 1, 0)) or
                 self.k_in_row(board, move, player, (0, 0, 1)) or
                 self.k_in_row(board, move, player, (1, 1, 1)) or
-                self.k_in_row(board, move, player, (1, -1, 1))):
-            return +1 if player == 'X' else -1
+                self.k_in_row(board, move, player, (1, -1, 1)) or
+                self.k_in_row(board, move, player, (1, 1, -1)) or
+                self.k_in_row(board, move, player, (1, -1, -1)) or 
+                self.k_in_row(board, move, player, (1, 0, 1)) or 
+                self.k_in_row(board, move, player, (1, 0, -1)) or
+                self.k_in_row(board, move, player, (0, 1, 1)) or 
+                self.k_in_row(board, move, player, (0, 1, -1))):
+            return +1000000 if player == 'X' else -1000000
         else:
             return 0
 
@@ -77,7 +83,7 @@ def evaluation_fn(state):
     twoInRow=0
     threeInRow=0
     if player == 'X':
-        otherPlayer = 'Y'
+        otherPlayer = 'O'
     else:
         otherPlayer = 'X'
 
@@ -272,13 +278,17 @@ def evaluation_fn(state):
     if numInRow == 3:
         threeInRow+=1
 
-    finalUtility=((43**2)*threeInRow)+(43*twoInRow)+oneInRow
-    return finalUtility
+    if threeInRow==0:
+        finalUtility=(43*twoInRow)+oneInRow
+        return finalUtility
+    else: 
+        return 1000000
+    
 
 
 
 def alpha_beta_cutoff_player(game, state):
-    return alpha_beta_cutoff_search(state, game, d=4, cutoff_test=None, eval_fn=evaluation_fn)
+    return alpha_beta_cutoff_search(state, game, d=2, cutoff_test=None, eval_fn=evaluation_fn)
 
        
 

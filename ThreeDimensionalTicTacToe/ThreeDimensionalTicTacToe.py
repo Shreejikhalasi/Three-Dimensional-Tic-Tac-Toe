@@ -57,7 +57,7 @@ class ThreeDimensionalTicTacToe(Game):
                 self.k_in_row(board, move, player, (1, 0, -1)) or
                 self.k_in_row(board, move, player, (0, 1, 1)) or 
                 self.k_in_row(board, move, player, (0, 1, -1))):
-            return +1000000 if player == 'X' else -1000000
+            return +1 if player == 'X' else -1
         else:
             return 0
 
@@ -75,214 +75,240 @@ class ThreeDimensionalTicTacToe(Game):
             x, y, z = x - delta_x, y - delta_y, z - delta_z
         n -= 1  # Because we counted move itself twice
         return n >= self.k
+    
+def k_in_row_count(board, move, player, delta_x_y_z):
+    (delta_x, delta_y, delta_z) = delta_x_y_z
+    x, y, z = move
+    n = 0  # n is number of moves in row
+    while board.get((x, y, z)) == player:
+        n += 1
+        x, y, z = x + delta_x, y + delta_y, z + delta_z
+    x, y, z = move
+    while board.get((x, y, z)) == player:
+        n += 1
+        x, y, z = x - delta_x, y - delta_y, z - delta_z
+    n -= 1  # Because we counted move itself twice
+    return n 
+
+def count_in_a_row(board, player):
+    value = 0
+    count = 0
+    move = (1, 1, 1)
+    if (k_in_row_count(board, move, player, (0, 1, 0)) == 2 or
+        k_in_row_count(board, move, player, (1, 0, 0)) == 2 or
+        k_in_row_count(board, move, player, (1, 1, 0)) == 2 or
+        k_in_row_count(board, move, player, (0, 1, 1)) == 2 or 
+        k_in_row_count(board, move, player, (1, 0, 1)) == 2 or 
+        k_in_row_count(board, move, player, (0, 0, 1)) == 2 or 
+        k_in_row_count(board, move, player, (1, 1, 1)) == 2):
+        value += .66 if player == 'X' else -.66
+        count += 1
+
+    if (k_in_row_count(board, move, player, (0, 1, 0)) == 1 or
+        k_in_row_count(board, move, player, (1, 0, 0)) == 1 or
+        k_in_row_count(board, move, player, (1, 1, 0)) == 1 or
+        k_in_row_count(board, move, player, (0, 1, 1)) == 1 or 
+        k_in_row_count(board, move, player, (1, 0, 1)) == 1 or 
+        k_in_row_count(board, move, player, (0, 0, 1)) == 1 or 
+        k_in_row_count(board, move, player, (1, 1, 1)) == 1):
+        value += .33 if player == 'X' else -.33
+        count += 1
+
+    move = (2, 2, 1)
+    if (k_in_row_count(board, move, player, (0, 1, 0)) == 2 or
+        k_in_row_count(board, move, player, (1, 0, 0)) == 2 or 
+        k_in_row_count(board, move, player, (0, 0, 1)) == 2 or 
+        k_in_row_count(board, move, player, (1, -1, 0)) == 2):
+        value += .66 if player == 'X' else -.66
+        count += 1
+
+    if (k_in_row_count(board, move, player, (0, 1, 0)) == 1 or
+        k_in_row_count(board, move, player, (1, 0, 0)) == 1 or 
+        k_in_row_count(board, move, player, (0, 0, 1)) == 1 or 
+        k_in_row_count(board, move, player, (1, -1, 0)) == 1):
+        #return 0.33 if player == 'X' else -0.33
+        value += .33 if player == 'X' else -.33
+        count += 1
+
+    move = (3, 3, 1)
+    if (k_in_row_count(board, move, player, (0, 1, 0)) == 2 or
+        k_in_row_count(board, move, player, (1, 0, 0)) == 2 or 
+        k_in_row_count(board, move, player, (0, 0, 1)) == 2 or
+        k_in_row_count(board, move, player, (1, 1, -1)) == 2 or
+        k_in_row_count(board, move, player, (-1, 0, -1)) == 2 or
+        k_in_row_count(board, move, player, (0, -1, -1)) == 2):
+        value += .66 if player == 'X' else -.66
+        count += 1
+
+    if (k_in_row_count(board, move, player, (0, 1, 0)) == 1 or
+        k_in_row_count(board, move, player, (1, 0, 0)) == 1 or 
+        k_in_row_count(board, move, player, (0, 0, 1)) == 1 or
+        k_in_row_count(board, move, player, (1, 1, -1)) == 1 or
+        k_in_row_count(board, move, player, (-1, 0, -1)) == 1 or
+        k_in_row_count(board, move, player, (0, -1, -1)) == 1):
+        value += .33 if player == 'X' else -.33
+        count += 1
+
+    move = (2, 2, 2)
+    if (k_in_row_count(board, move, player, (1, -1, -1)) == 2 or
+        k_in_row_count(board, move, player, (-1, 1, -1)) == 2 or
+        k_in_row_count(board, move, player, (0, 1, 0)) == 2 or 
+        k_in_row_count(board, move, player, (1, 0, 0)) == 2 or
+        k_in_row_count(board, move, player, (1, -1, 0)) == 2 or 
+        k_in_row_count(board, move, player, (1, 1, 0)) == 2 or
+        k_in_row_count(board, move, player, (0, 1, 1)) == 2 or
+        k_in_row_count(board, move, player, (0, 1, -1)) == 2 or 
+        k_in_row_count(board, move, player, (1, 0, 1)) == 2 or 
+        k_in_row_count(board, move, player, (1, 0, -1)) == 2):
+        value += .66 if player == 'X' else -.66
+        count += 1
+
+    if (k_in_row_count(board, move, player, (1, -1, -1)) == 1 or
+        k_in_row_count(board, move, player, (-1, 1, -1)) == 1 or
+        k_in_row_count(board, move, player, (0, 1, 0)) == 1 or 
+        k_in_row_count(board, move, player, (1, 0, 0)) == 1 or
+        k_in_row_count(board, move, player, (1, -1, 0)) == 1 or 
+        k_in_row_count(board, move, player, (1, 1, 0)) == 1 or
+        k_in_row_count(board, move, player, (0, 1, 1)) == 1 or
+        k_in_row_count(board, move, player, (0, 1, -1)) == 1 or 
+        k_in_row_count(board, move, player, (1, 0, 1)) == 1 or 
+        k_in_row_count(board, move, player, (1, 0, -1)) == 1):
+        value += .33 if player == 'X' else -.33
+        count += 1
+
+    move = (1, 1, 2)
+    if (k_in_row_count(board, move, player, (0, 1, 0)) == 2 or
+        k_in_row_count(board, move, player, (1, 0, 0)) == 2):
+        value += .66 if player == 'X' else -.66
+        count += 1
+
+    if (k_in_row_count(board, move, player, (0, 1, 0)) == 1 or
+        k_in_row_count(board, move, player, (1, 0, 0)) == 1):
+        value += .33 if player == 'X' else -.33
+        count += 1
+
+    move = (3, 3, 2)
+    if (k_in_row_count(board, move, player, (0, 1, 0)) == 2 or
+        k_in_row_count(board, move, player, (1, 0, 0)) == 2):
+        value += .66 if player == 'X' else -.66
+        count += 1
+
+    if (k_in_row_count(board, move, player, (0, 1, 0)) == 1 or
+        k_in_row_count(board, move, player, (1, 0, 0)) == 1):
+        value += .33 if player == 'X' else -.33
+        count += 1
+
+    move = (1, 1, 3)
+    if (k_in_row_count(board, move, player, (0, 1, 0)) == 2 or
+        k_in_row_count(board, move, player, (1, 0, 0)) == 2 or
+        k_in_row_count(board, move, player, (1, 1, 0)) == 2 or
+        k_in_row_count(board, move, player, (1, 0, -1)) == 2 or
+        k_in_row_count(board, move, player, (0, 1, -1)) == 2):
+        value += .66 if player == 'X' else -.66
+        count += 1
+    
+    if (k_in_row_count(board, move, player, (0, 1, 0)) == 1 or
+        k_in_row_count(board, move, player, (1, 0, 0)) == 1 or
+        k_in_row_count(board, move, player, (1, 1, 0)) == 1 or
+        k_in_row_count(board, move, player, (1, 0, -1)) == 1 or
+        k_in_row_count(board, move, player, (0, 1, -1)) == 1):
+        #return 0.33 if player == 'X' else -0.33
+        value += .33 if player == 'X' else -.33
+        count += 1
+
+    move = (3, 3, 3)
+    if (k_in_row_count(board, move, player, (0, 1, 0)) == 2 or
+        k_in_row_count(board, move, player, (1, 0, 0)) == 2 or
+        k_in_row_count(board, move, player, (1, 0, 1)) == 2 or
+        k_in_row_count(board, move, player, (0, 1, 1)) == 2):
+        value += .66 if player == 'X' else -.66
+        count += 1
+
+    if (k_in_row_count(board, move, player, (0, 1, 0)) == 1 or
+        k_in_row_count(board, move, player, (1, 0, 0)) == 1 or
+        k_in_row_count(board, move, player, (1, 0, 1)) == 1 or
+        k_in_row_count(board, move, player, (0, 1, 1)) == 1):
+        value += .33 if player == 'X' else -.33
+        count += 1
+
+    move = (2, 2, 3)
+    if (k_in_row_count(board, move, player, (0, 1, 0)) == 2 or
+        k_in_row_count(board, move, player, (1, 0, 0)) == 2 or 
+        k_in_row_count(board, move, player, (1, -1, 0)) == 2):
+        value += .66 if player == 'X' else -.66
+        count += 1
+
+    if (k_in_row_count(board, move, player, (0, 1, 0)) == 1 or
+        k_in_row_count(board, move, player, (1, 0, 0)) == 1 or 
+        k_in_row_count(board, move, player, (1, -1, 0)) == 1):
+        value += .33 if player == 'X' else -.33
+        count += 1
+
+    move = (1, 2, 1)
+    if (k_in_row_count(board, move, player, (0, 0, 1)) == 2):
+        value += .66 if player == 'X' else -.66
+        count += 1
+
+    if (k_in_row_count(board, move, player, (0, 0, 1)) == 1):
+        value += .33 if player == 'X' else -.33
+        count += 1
+
+    move = (1, 3, 1)
+    if (k_in_row_count(board, move, player, (0, 0, 1)) == 2):
+        value += .66 if player == 'X' else -.66
+        count += 1
+    
+    if (k_in_row_count(board, move, player, (0, 0, 1)) == 1):
+        value += .33 if player == 'X' else -.33
+        count += 1
+
+    move = (2, 1, 1)
+    if (k_in_row_count(board, move, player, (0, 0, 1)) == 2):
+        value += .66 if player == 'X' else -.66
+        count += 1
+    
+    if (k_in_row_count(board, move, player, (0, 0, 1)) == 1):
+        value += .33 if player == 'X' else -.33
+        count += 1
+
+    move = (2, 3, 1)
+    if (k_in_row_count(board, move, player, (0, 0, 1)) == 2):
+        value += .66 if player == 'X' else -.66
+        count += 1
+    
+    if (k_in_row_count(board, move, player, (0, 0, 1)) == 1):
+        value += .33 if player == 'X' else -.33
+        count += 1
+
+    move = (3, 1, 1)
+    if (k_in_row_count(board, move, player, (0, 0, 1)) == 2):
+        value += .66 if player == 'X' else -.66
+        count += 1
+    
+    if (k_in_row_count(board, move, player, (0, 0, 1)) == 1):
+        value += .33 if player == 'X' else -.33
+        count += 1
+
+    move = (3, 2, 1)
+    if (k_in_row_count(board, move, player, (0, 0, 1)) == 2):
+        value += .66 if player == 'X' else -.66
+        count += 1
+    
+    if (k_in_row_count(board, move, player, (0, 0, 1)) == 1):
+        value += .33 if player == 'X' else -.33
+        count += 1
+    if count == 0:
+        return value
+    else:
+        return value/count
 
 def evaluation_fn(state):
-    player = state.to_move
-    board = state.board.copy()
-    oneInRow=0
-    twoInRow=0
-    threeInRow=0
-    if player == 'X':
-        otherPlayer = 'O'
-    else:
-        otherPlayer = 'X'
+    if state.utility != 0:
+        return state.utility
+    board=state.board
+    value = count_in_a_row(board, 'X')
+    return value
 
-    #Horizontal rows flat
-    for dimension in range(1, 4):
-        for row in range(1, 4):
-            numInRow = 0
-            for elem in (1, 4):
-                if board.get((elem, row, dimension)) == player:
-                    numInRow+=1
-                if board.get((elem, row, dimension)) == otherPlayer:
-                    numInRow=0
-                    break
-            if numInRow == 1:
-                oneInRow+=1
-            if numInRow == 2:
-                twoInRow+=1
-            if numInRow == 3:
-                threeInRow+=1
-
-    #Vertical rows flat
-    for dimension in range(1, 4):
-        for row in range(1, 4):
-            numInRow = 0
-            for elem in (1, 4):
-                if board.get((row, elem, dimension)) == player:
-                    numInRow+=1
-                if board.get((row, elem, dimension)) == otherPlayer:
-                    numInRow=0
-                    break
-            if numInRow == 1:
-                oneInRow+=1
-            if numInRow == 2:
-                twoInRow+=1
-            if numInRow == 3:
-                threeInRow+=1
-    
-    #\ rows flat
-    for dimension in range(1, 4):
-        numInRow=0
-        for x in range(1, 4):
-            if board.get((x, x, dimension)) == player:
-                numInRow+=1
-            if board.get((x, x, dimension)) == otherPlayer:
-                numInRow=0
-                break
-        if numInRow == 1:
-            oneInRow+=1
-        if numInRow == 2:
-            twoInRow+=1
-        if numInRow == 3:
-            threeInRow+=1
-
-    #/ rows flat
-    for dimension in range(1, 4):
-        numInRow=0
-        for x in range(3, 0, -1):
-            if board.get((x, x, dimension)) == player:
-                numInRow+=1
-            if board.get((x, x, dimension)) == otherPlayer:
-                numInRow=0
-                break
-        if numInRow == 1:
-            oneInRow+=1
-        if numInRow == 2:
-            twoInRow+=1
-        if numInRow == 3:
-            threeInRow+=1
-
-    #Z axis
-    for row in range(1, 4):
-        for col in range(1, 4):
-            numInRow=0
-            for dim in range(1, 4):
-                if board.get((row, col, dimension)) == player:
-                    numInRow+=1
-                if board.get((row, col, dimension)) == otherPlayer:
-                    numInRow=0
-                    break
-            if numInRow == 1:
-                oneInRow+=1
-            if numInRow == 2:
-                twoInRow+=1
-            if numInRow == 3:
-                threeInRow+=1
-
-    #Side diagonal 
-    for row in (1, 4):
-        numInRow=0
-        for col in (1, 4):
-            if board.get((row, col, col)) == player:
-                numInRow+=1
-            if board.get((row, col, col)) == otherPlayer:
-                numInRow=0
-                break
-        if numInRow == 1:
-            oneInRow+=1
-        if numInRow == 2:
-            twoInRow+=1
-        if numInRow == 3:
-            threeInRow+=1
-
-    #Side diagonal
-    for row in (1, 4):
-        numInRow=0
-        dim=1
-        for col in (3, 0, -1):
-            if board.get((row, col, dim)) == player:
-                numInRow+=1
-            if board.get((row, col, dim)) == otherPlayer:
-                numInRow=0
-                break
-            dim+=1
-        if numInRow == 1:
-            oneInRow+=1
-        if numInRow == 2:
-            twoInRow+=1
-        if numInRow == 3:
-            threeInRow+=1
-
-    #3d diagonal 1
-    numInRow=0
-    for rcd in (1, 4):
-        if board.get((rcd, rcd, rcd)) == player:
-            numInRow+=1
-        if board.get((rcd, rcd, rcd)) == otherPlayer:
-            numInRow=0
-            break
-    if numInRow == 1:
-        oneInRow+=1
-    if numInRow == 2:
-        twoInRow+=1
-    if numInRow == 3:
-        threeInRow+=1
-
-    #3d diagonal 2
-    numInRow=0
-    dim=1
-    for rcd in (3, 0, -1):
-        if board.get((rcd, rcd, dim)) == player:
-            numInRow+=1
-        if board.get((rcd, rcd, dim)) == otherPlayer:
-            numInRow=0
-            break
-        dim+=1
-    if numInRow == 1:
-        oneInRow+=1
-    if numInRow == 2:
-        twoInRow+=1
-    if numInRow == 3:
-        threeInRow+=1
-
-    #3d diagonal 3
-    numInRow=0
-    dim=1
-    row=1
-    col=3
-    for count in (1, 4):
-        if board.get((row, col, dim)) == player:
-            numInRow+=1
-        if board.get((row, col, dim)) == otherPlayer:
-            numInRow=0
-            break
-        dim+=1
-        row+=1
-        col-=1
-    if numInRow == 1:
-        oneInRow+=1
-    if numInRow == 2:
-        twoInRow+=1
-    if numInRow == 3:
-        threeInRow+=1
-
-    #3d diagonal 3
-    numInRow=0
-    dim=3
-    row=1
-    col=3
-    for count in (1, 4):
-        if board.get((row, col, dim)) == player:
-            numInRow+=1
-        if board.get((row, col, dim)) == otherPlayer:
-            numInRow=0
-            break
-        dim-=1
-        row+=1
-        col-=1
-    if numInRow == 1:
-        oneInRow+=1
-    if numInRow == 2:
-        twoInRow+=1
-    if numInRow == 3:
-        threeInRow+=1
-
-    if threeInRow==0:
-        finalUtility=(43*twoInRow)+oneInRow
-        return finalUtility
-    else: 
-        return 1000000
 
 def alpha_beta_cutoff_player(game, state):
     return alpha_beta_cutoff_search(state, game, d=2, cutoff_test=None, eval_fn=evaluation_fn)

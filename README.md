@@ -13,8 +13,7 @@ Shreeji Khalasi
 3. Open repository on command line with path.  ex. 'cd desktop', then 'cd Three-Dimensional-Tic-Tac-Toe' <br />
 3a. For Gui:
      - Open file using 'cd GUIUsingQt5'
-     - Run code using 'python 3dtictactoe.py' <br />
-3b. For Code:
+     - Run code using 'python 3dtictactoe.py' <br />3b. For Code:
      - Open file using 'cd ThreeDimensionalTicTacToe'
      - Run code using 'python ThreeDimensionalTicTacToe.py'
 

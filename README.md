@@ -17,9 +17,5 @@ Shreeji Khalasi
      - Open file using 'cd ThreeDimensionalTicTacToe'
      - Run code using 'python ThreeDimensionalTicTacToe.py'
 
-
-Using a heuristic that will allow us to find the optimal
-moves for playing 3DTicTacToe. This will allow us to use the A* search algorithm. We
-will also be using Min-Max with alpha beta pruning to find the optimal moves to make
-and we can play against the program and choose if the program should use the best
-moves possible or the worst.
+#Summary
+For our project, we decided to implement an AI that uses the Alpha Beta Cutoff Search to play a variation of Tic Tac Toe, which is 3D Tic Tac Toe. We wrote an evaluation function for the AI so it could choose the most optimal move everytime. When you play against the AI, the AI will choose the best move to make based off of the board. 

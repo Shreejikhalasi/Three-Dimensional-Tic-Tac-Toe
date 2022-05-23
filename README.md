@@ -17,5 +17,5 @@ Shreeji Khalasi
      - Open file using 'cd ThreeDimensionalTicTacToe'
      - Run code using 'python ThreeDimensionalTicTacToe.py'
 
-#Summary
+# Summary:
 For our project, we decided to implement an AI that uses the Alpha Beta Cutoff Search to play a variation of Tic Tac Toe, which is 3D Tic Tac Toe. We wrote an evaluation function for the AI so it could choose the most optimal move everytime. When you play against the AI, the AI will choose the best move to make based off of the board. 

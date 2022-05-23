@@ -10,6 +10,7 @@ Shreeji Khalasi
 # Instructions to run:
 1. Clone Repository: On command line, run 'git clone <link>
 2. Open repository on command line with path.  ex. 'cd desktop', then 'cd Three-Dimensional-Tic-Tac-Toe'
+3. Open repository on command line with path.  ex. 'cd desktop', then 'cd Three-Dimensional-Tic-Tac-Toe'
 3a. For Gui:
      - Open file using 'cd GUIUsingQt5'
      - Run code using 'python 3dtictactoe.py' 
